@@ -29,14 +29,27 @@ module.exports = new Transformer({
         const html = await asset.getCode();
         try {
             const ogImageTag = getMetaTag(html, 'og:image');
-	    const ogImageContent = getMetaTagContent(ogImageTag);
+            const ogImageContent = getMetaTagContent(ogImageTag);
 
-	    const ogUrlTag = getMetaTag(html, 'og:url');
-	    const ogUrlContent = getMetaTagContent(ogUrlTag);
+            const twitterImageTag = getMetaTag(html, 'twitter:image');
+            const twitterImageContent =  getMetaTagContent(twitterImageTag);
 
-	    const absoluteOgImageUrl = url.resolve(ogUrlContent, ogImageContent);
-	    const ogImageTagAbsoluteUrl = ogImageTag.replace(ogImageContent, absoluteOgImageUrl);
-	    const patchedHtml = html.replace(ogImageTag, ogImageTagAbsoluteUrl);
+            const ogUrlTag = getMetaTag(html, 'og:url');
+            const ogUrlContent = getMetaTagContent(ogUrlTag);
+
+            // instead of url.resolve, we just append directly.
+            // the reason is it seems like Parcel 2 just goes through
+            // and replaces content hash with string replace and adds a `/`
+            // in front of it. So if we do url resolve then we get a double
+            // `//` and the link won't work.
+            const absoluteImageUrl = ogUrlContent + ogImageContent;
+
+
+            const ogImageTagAbsoluteUrl = ogImageTag.replace(ogImageContent, absoluteImageUrl);
+            const twitterImageTagAbsoluteUrl = twitterImageTag.replace(twitterImageContent, absoluteImageUrl);
+
+            // we assume the twitter:image meta tag has the same URL as the og:image tag
+            const patchedHtml = html.replace(ogImageTag, ogImageTagAbsoluteUrl).replace(twitterImageTag, twitterImageTagAbsoluteUrl);
 
             asset.setCode(patchedHtml);
         } catch (error) {
