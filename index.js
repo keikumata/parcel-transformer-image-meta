@@ -1,6 +1,7 @@
 /**
  * Define packages.
  */
+const url = require('url');
 const { Transformer } = require('@parcel/plugin');
 
 /**
@@ -40,13 +41,9 @@ const getMetaTagContent = (metaTagHtml) => {
  */
 const getReplacedMetaTagContent = (metaHTML, baseUrl) => {
   const metaContent = getMetaTagContent(metaHTML);
-  // instead of url.resolve, we just append directly.
-  // the reason is it seems like Parcel 2 just goes through
-  // and replaces content hash with string replace and adds a `/`
-  // in front of it. So if we do url resolve then we get a double
-  // `//` and the link won't work.
-  const absoluteImageUrl = baseUrl + metaContent;
-  return metaHTML.replace(metaContent, absoluteImageUrl);
+  // Removed contact system,it was failing if
+  // '/' is not available at string on image content.
+  return metaHTML.replace(metaContent, url.resolve(baseUrl, metaContent));
 };
 
 /**
@@ -91,7 +88,11 @@ module.exports = new Transformer({
       let patchedHtml = html;
       // we assume the twitter:image meta tag has the same URL as the og:image tag
       patchedHtml = findReplaceMeta(patchedHtml, 'og:image', 'og:url');
-      patchedHtml = findReplaceMeta(patchedHtml, 'twitter:image', '(og:url|twitter:url)');
+      patchedHtml = findReplaceMeta(
+        patchedHtml,
+        'twitter:image',
+        '(og:url|twitter:url)',
+      );
       asset.setCode(patchedHtml);
     } catch (error) {
       throw new Error(error.message);
