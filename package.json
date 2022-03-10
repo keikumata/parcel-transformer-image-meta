@@ -8,24 +8,33 @@
     "parcel": "^2.0.0-alpha.1.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint index.js",
+    "lint-fix": "eslint --fix index.js",
+    "preversion": "npm run lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keikumata/parcel-transformer-meta-image.git"
+    "url": "git+https://github.com/keikumata/parcel-transformer-image-meta.git"
   },
   "keywords": [
     "parcel",
-    "plugin",
-    "og:image"
+    "parcel-plugin",
+    "parcel-transformer",
+    "og:image",
+    "twiiter:image",
+    "open-graph"
   ],
   "author": "keikumata <yoshikoshikei95@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/keikumata/parcel-transformer-meta-image/issues"
+    "url": "https://github.com/keikumata/parcel-transformer-image-meta/issues"
   },
-  "homepage": "https://github.com/keikumata/parcel-transformer-meta-image#readme",
+  "homepage": "https://github.com/keikumata/parcel-transformer-image-meta#readme",
   "dependencies": {
     "@parcel/plugin": "*"
+  },
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0"
   }
 }
