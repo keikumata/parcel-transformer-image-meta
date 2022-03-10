@@ -28,8 +28,7 @@
   },
   "homepage": "https://github.com/keikumata/parcel-transformer-meta-image#readme",
   "dependencies": {
-    "@parcel/plugin": "*",
-    "chalk": "^4.1.2"
+    "@parcel/plugin": "*"
   },
   "devDependencies": {
     "eslint": "^8.10.0",
