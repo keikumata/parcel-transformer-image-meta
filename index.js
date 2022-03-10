@@ -1,4 +1,3 @@
-const url = require('url');
 const { Transformer } = require('@parcel/plugin');
 
 const getMetaTag = (html, property) => {
