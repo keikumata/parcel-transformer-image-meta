@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { Transformer } = require('@parcel/plugin');
 
 const getMetaTag = (html, property) => {
