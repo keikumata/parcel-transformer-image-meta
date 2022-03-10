@@ -12,7 +12,7 @@ const { Transformer } = require('@parcel/plugin');
  */
 const getMetaTag = (html, property) => {
   const regex = new RegExp(
-    `<meta[^>]*(name|property)=["|']${property}["|'][^>]*>`,
+    `<meta[^>]*property=["|']${property}["|'][^>]*>`,
     'i',
   );
   const results = regex.exec(html);
@@ -91,7 +91,7 @@ module.exports = new Transformer({
       let patchedHtml = html;
       // we assume the twitter:image meta tag has the same URL as the og:image tag
       patchedHtml = findReplaceMeta(patchedHtml, 'og:image');
-      patchedHtml = findReplaceMeta(patchedHtml, 'twiiter:image');
+      patchedHtml = findReplaceMeta(patchedHtml, 'twitter:image');
       asset.setCode(patchedHtml);
     } catch (error) {
       throw new Error(error.message);
