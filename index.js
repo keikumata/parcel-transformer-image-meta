@@ -12,7 +12,7 @@ const { Transformer } = require('@parcel/plugin');
  */
 const getMetaTag = (html, property) => {
   const regex = new RegExp(
-    `<meta[^>]*property=["|']${property}["|'][^>]*>`,
+    `<meta[^>]*(name|property)=["|']${property}["|'][^>]*>`,
     'i',
   );
   const results = regex.exec(html);
