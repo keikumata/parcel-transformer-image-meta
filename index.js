@@ -90,8 +90,8 @@ module.exports = new Transformer({
     try {
       let patchedHtml = html;
       // we assume the twitter:image meta tag has the same URL as the og:image tag
-      patchedHtml = findReplaceMeta(patchedHtml, 'og:image');
-      patchedHtml = findReplaceMeta(patchedHtml, 'twitter:image');
+      patchedHtml = findReplaceMeta(patchedHtml, 'og:image', 'og:url');
+      patchedHtml = findReplaceMeta(patchedHtml, 'twitter:image', '(og:url|twitter:url)');
       asset.setCode(patchedHtml);
     } catch (error) {
       throw new Error(error.message);
